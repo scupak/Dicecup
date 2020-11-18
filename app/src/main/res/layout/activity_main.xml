@@ -1,31 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/tvHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Dicecup version 1"
-        android:layout_gravity="center_horizontal" />
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:textSize="25dp"
+        android:textStyle="bold"/>
 
     <LinearLayout
+        android:id="@+id/layoutDices"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_gravity="center_horizontal">
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/tvHeader"
+        android:background="@color/diceboard">
 
     <ImageView
         android:id="@+id/imgDice1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/dice1"
-        android:layout_margin="50dp"
+        android:src="@drawable/dice1"
+        android:layout_margin="30dp"
         android:maxWidth="100dp"
         android:scaleType="fitCenter"
         android:adjustViewBounds ="true"
@@ -35,9 +41,8 @@
         android:id="@+id/imgDice2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/dice1"
-        android:layout_margin="50dp"
-
+        android:src="@drawable/dice1"
+        android:layout_margin="30dp"
         android:maxWidth="100dp"
         android:scaleType="fitCenter"
         android:adjustViewBounds ="true"/>
@@ -48,11 +53,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Roll"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/layoutDices"/>
     <TextView
         android:id="@+id/tvHistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/btnRoll"/>
 
-</LinearLayout>
+    <Button
+        android:id="@+id/btnClear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"/>
+
+
+</RelativeLayout>
