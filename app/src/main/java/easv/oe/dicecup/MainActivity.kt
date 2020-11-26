@@ -2,12 +2,12 @@ package easv.oe.dicecup
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
+    val MAX_HISTORY = 5
 
     val diceId = intArrayOf(0, R.drawable.dice1,
                                R.drawable.dice2,
@@ -24,22 +24,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        findViewById<Button>(R.id.btnRoll).setOnClickListener { v -> onClickRoll() }
+        btnRoll.setOnClickListener { v -> onClickRoll() }
 
-        findViewById<ImageView>(R.id.imgDice2).setOnClickListener { v -> onClickRoll() }
-        findViewById<ImageView>(R.id.imgDice1).setOnClickListener { v -> onClickRoll() }
+        imgDice1.setOnClickListener { v -> onClickRoll() }
+        imgDice2.setOnClickListener { v -> onClickRoll() }
     }
 
     fun onClickRoll(){
         val e1 = ran.nextInt(6) + 1
         val e2 = ran.nextInt(6) + 1
         mHistory.add(Pair(e1,e2))
-        if (mHistory.size > 5) mHistory.removeAt(0)
-        val d1 = findViewById<ImageView>(R.id.imgDice1)
-        val d2 = findViewById<ImageView>(R.id.imgDice2)
-        d1.setImageResource( diceId[e1] )
-        d2.setImageResource( diceId[e2] )
-        val tvHistory = findViewById<TextView>(R.id.tvHistory)
+        if (mHistory.size > MAX_HISTORY) mHistory.removeAt(0)
+
+        imgDice1.setImageResource( diceId[e1] )
+        imgDice2.setImageResource( diceId[e2] )
         var s:String = ""
         mHistory.forEach { p ->  val e1 = p.first
                                  val e2 = p.second
