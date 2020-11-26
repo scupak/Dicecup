@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -25,11 +26,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        findViewById<Button>(R.id.btnRoll).setOnClickListener { v -> onClickRoll() }
+        btnRoll.setOnClickListener { v -> onClickRoll() }
 
-        findViewById<ImageView>(R.id.imgDice2).setOnClickListener { v -> onClickRoll() }
-        findViewById<ImageView>(R.id.imgDice1).setOnClickListener { v -> onClickRoll() }
-        findViewById<Button>(R.id.btnClear).setOnClickListener { v -> onClickClear() }
+        imgDice1.setOnClickListener { v -> onClickRoll() }
+        imgDice2.setOnClickListener { v -> onClickRoll() }
+        btnClear.setOnClickListener { v -> onClickClear() }
     }
 
     fun onClickRoll(){
@@ -37,10 +38,8 @@ class MainActivity : AppCompatActivity() {
         val e2 = mRandomGenerator.nextInt(6) + 1
 
         // update dices
-        val d1 = findViewById<ImageView>(R.id.imgDice1)
-        val d2 = findViewById<ImageView>(R.id.imgDice2)
-        d1.setImageResource( diceId[e1] )
-        d2.setImageResource( diceId[e2] )
+        imgDice1.setImageResource( diceId[e1] )
+        imgDice2.setImageResource( diceId[e2] )
 
         //update history
         mHistory.add(Pair(e1,e2))
@@ -55,7 +54,6 @@ class MainActivity : AppCompatActivity() {
 
     // ensures that the history text aligns the history object
     fun updateHistory() {
-        val tvHistory = findViewById<TextView>(R.id.tvHistory)
         var s = ""
         mHistory.forEach { p ->  val e1 = p.first; val e2 = p.second; s += "$e1 - $e2 \n" }
         tvHistory.text = s
