@@ -2,6 +2,7 @@ package easv.oe.dicecup
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -10,30 +11,31 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
+    private val TAG: String = "xyz"
     // mapping from 1..6 to drawables, the first index is unused
-    val diceId = intArrayOf(0, R.drawable.dice1,
+    private val diceId = intArrayOf(0, R.drawable.dice1,
                                R.drawable.dice2,
                                R.drawable.dice3,
                                R.drawable.dice4,
                                R.drawable.dice5,
                                R.drawable.dice6)
 
-    val mRandomGenerator = Random()
+    private val mRandomGenerator = Random()
 
-    val mHistory = mutableListOf<Pair<Int, Int>>()
+    private val mHistory = mutableListOf<Pair<Int, Int>>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         btnRoll.setOnClickListener { v -> onClickRoll() }
 
         imgDice1.setOnClickListener { v -> onClickRoll() }
         imgDice2.setOnClickListener { v -> onClickRoll() }
         btnClear.setOnClickListener { v -> onClickClear() }
+        Log.d(TAG, "OnCreate")
     }
 
-    fun onClickRoll(){
+    private fun onClickRoll(){
         val e1 = mRandomGenerator.nextInt(6) + 1
         val e2 = mRandomGenerator.nextInt(6) + 1
 
@@ -45,15 +47,17 @@ class MainActivity : AppCompatActivity() {
         mHistory.add(Pair(e1,e2))
         if (mHistory.size > 5) mHistory.removeAt(0)
         updateHistory()
+        Log.d(TAG, "Roll")
     }
 
-    fun onClickClear() {
+    private fun onClickClear() {
+        Log.d(TAG, "Clear")
         mHistory.clear()
         updateHistory()
     }
 
     // ensures that the history text aligns the history object
-    fun updateHistory() {
+    private fun updateHistory() {
         var s = ""
         mHistory.forEach { p ->  val e1 = p.first; val e2 = p.second; s += "$e1 - $e2 \n" }
         tvHistory.text = s
