@@ -1,11 +1,14 @@
 package easv.oe.dicecup
 
+import android.app.Activity
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -33,18 +36,29 @@ class MainActivity : AppCompatActivity() {
         imgDice2.setOnClickListener { v -> onClickRoll() }
         btnClear.setOnClickListener { v -> onClickClear() }
         Log.d(TAG, "OnCreate")
+        val orientation = this.getResources().getConfiguration().orientation
+        val message = if (orientation == Configuration.ORIENTATION_PORTRAIT) "Portrait" else "Landscape"
+        Toast.makeText(this,message, Toast.LENGTH_LONG).show()
+
+        if (savedInstanceState != null)
+        {
+            Log.d(TAG, "saved state NOT null")
+            val history = savedInstanceState.getSerializable("history") as Array<Pair<Int,Int>>
+            history.forEach { p -> mHistory.add(p) }
+            updateHistory()
+            updateDicesWith(mHistory[mHistory.size-1])
+        }
     }
 
     private fun onClickRoll(){
         val e1 = mRandomGenerator.nextInt(6) + 1
         val e2 = mRandomGenerator.nextInt(6) + 1
-
-        // update dices
-        imgDice1.setImageResource( diceId[e1] )
-        imgDice2.setImageResource( diceId[e2] )
-
+        val p = Pair(e1,e2)
         //update history
-        mHistory.add(Pair(e1,e2))
+        mHistory.add(p)
+
+        // set dices
+        updateDicesWith(p)
         if (mHistory.size > 5) mHistory.removeAt(0)
         updateHistory()
         Log.d(TAG, "Roll")
@@ -61,6 +75,18 @@ class MainActivity : AppCompatActivity() {
         var s = ""
         mHistory.forEach { p ->  val e1 = p.first; val e2 = p.second; s += "$e1 - $e2 \n" }
         tvHistory.text = s
+    }
+
+    private fun updateDicesWith(p: Pair<Int, Int>) {
+        imgDice1.setImageResource( diceId[p.first] )
+        imgDice2.setImageResource( diceId[p.second] )
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Log.d(TAG, "History saved")
+        val output = mHistory.toTypedArray()
+        outState.putSerializable("history", output)
     }
 
 }
