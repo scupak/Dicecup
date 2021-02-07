@@ -31,23 +31,23 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         btnRoll.setOnClickListener { v -> onClickRoll() }
-
-        imgDice1.setOnClickListener { v -> onClickRoll() }
-        imgDice2.setOnClickListener { v -> onClickRoll() }
         btnClear.setOnClickListener { v -> onClickClear() }
         Log.d(TAG, "OnCreate")
-        val orientation = this.getResources().getConfiguration().orientation
-        val message = if (orientation == Configuration.ORIENTATION_PORTRAIT) "Portrait" else "Landscape"
-        Toast.makeText(this,message, Toast.LENGTH_LONG).show()
+        
+        //<editor-fold desc="Restore history">
+        //        val orientation = this.getResources().getConfiguration().orientation
+//        val message = if (orientation == Configuration.ORIENTATION_PORTRAIT) "Portrait" else "Landscape"
+//        Toast.makeText(this,message, Toast.LENGTH_LONG).show()
 
-        if (savedInstanceState != null)
-        {
-            Log.d(TAG, "saved state NOT null")
-            val history = savedInstanceState.getSerializable("history") as Array<Pair<Int,Int>>
-            history.forEach { p -> mHistory.add(p) }
-            updateHistory()
-            updateDicesWith(mHistory[mHistory.size-1])
-        }
+//        if (savedInstanceState != null)
+//        {
+//            Log.d(TAG, "saved state NOT null")
+//            val history = savedInstanceState.getSerializable("history") as Array<Pair<Int,Int>>
+//            history.forEach { p -> mHistory.add(p) }
+//            updateHistory()
+//            updateDicesWith(mHistory[mHistory.size-1])
+//        }
+        //</editor-fold>
     }
 
     private fun onClickRoll(){
@@ -82,11 +82,13 @@ class MainActivity : AppCompatActivity() {
         imgDice2.setImageResource( diceId[p.second] )
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        Log.d(TAG, "History saved")
-        val output = mHistory.toTypedArray()
-        outState.putSerializable("history", output)
-    }
+    //<editor-fold desc="onSaveInstanceState">
+    //    override fun onSaveInstanceState(outState: Bundle) {
+//        super.onSaveInstanceState(outState)
+//        Log.d(TAG, "History saved")
+//        val output = mHistory.toTypedArray()
+//        outState.putSerializable("history", output)
+//    }
+    //</editor-fold>
 
 }
