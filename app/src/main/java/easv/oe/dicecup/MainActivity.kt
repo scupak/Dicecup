@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         btnRoll.setOnClickListener { v -> onClickRoll() }
         btnClear.setOnClickListener { v -> onClickClear() }
         Log.d(TAG, "OnCreate")
-        
+
         //<editor-fold desc="Restore history">
         //        val orientation = this.getResources().getConfiguration().orientation
 //        val message = if (orientation == Configuration.ORIENTATION_PORTRAIT) "Portrait" else "Landscape"
