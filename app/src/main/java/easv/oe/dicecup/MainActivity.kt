@@ -46,6 +46,9 @@ class MainActivity : AppCompatActivity() {
             history.forEach { p -> mHistory.add(p) }
             updateHistory()
 
+
+
+            if(!mHistory.isEmpty())
            updateDicesWith(mHistory[mHistory.size-1])
         }
         //</editor-fold>
